@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include "raymath.h"
 
+#define SPEED 1
+
 Player::Player()
 {
     model = LoadModel("objects/player/InterstellarRunner.obj");
@@ -9,7 +11,8 @@ Player::Player()
     SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
     position = {-1.7f, 0.0f, 0.0f};
     boundingBox = GetMeshBoundingBox(model.meshes[0]);
-    updateBoundingBox();
+    boundingBox.min = Vector3Add(boundingBox.min, position);
+    boundingBox.max = Vector3Add(boundingBox.max, position);
 }
 
 Model Player::getModel()
@@ -20,12 +23,6 @@ Model Player::getModel()
 Texture2D Player::getTexture()
 {
     return texture;
-}
-
-void Player::updateBoundingBox()
-{
-    boundingBox.min = Vector3Add(boundingBox.min, position);
-    boundingBox.max = Vector3Add(boundingBox.max, position);
 }
 
 BoundingBox Player::getBoundingBox()
@@ -40,12 +37,20 @@ Vector3 Player::getPosition()
 
 void Player::moveLeft()
 {
-    // TODO
+    float deltaX = SPEED * GetFrameTime();
+
+    position.x += deltaX;
+    boundingBox.min = Vector3Add(boundingBox.min, (Vector3){deltaX, 0.0f, 0.0f});
+    boundingBox.max = Vector3Add(boundingBox.max, (Vector3){deltaX, 0.0f, 0.0f});
 }
 
 void Player::moveRight()
 {
-    // TODO
+    float deltaX = SPEED * GetFrameTime();
+
+    position.x -= deltaX;
+    boundingBox.min = Vector3Add(boundingBox.min, (Vector3){-deltaX, 0.0f, 0.0f});
+    boundingBox.max = Vector3Add(boundingBox.max, (Vector3){-deltaX, 0.0f, 0.0f});
 }
 
 void Player::shoot()
