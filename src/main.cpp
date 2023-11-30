@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "Player.h"
+#include "Enemy.h"
 
 int main()
 {
@@ -11,6 +12,7 @@ int main()
     DisableCursor();
 
     Player player;
+    Enemy enemy;
 
     Camera camera = {0};
     camera.position = (Vector3){0.0f, 4.0f, -20.0f};
@@ -22,6 +24,7 @@ int main()
     while (!WindowShouldClose())
     {
         // Update
+        // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
 
         // Make the camera follow the player when they move
         camera.target = (Vector3){player.getPosition().x + 1.7f, 0.0f, 0.0f};
@@ -35,6 +38,10 @@ int main()
         BeginMode3D(camera);
         DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
         DrawBoundingBox(player.getBoundingBox(), LIME);
+
+        DrawModel(enemy.getModel(), enemy.getPosition(), enemy.getScale(), WHITE);
+        DrawBoundingBox(enemy.getBoundingBox(), LIME);
+
         DrawGrid(10, 10.0f);
         EndMode3D();
 
@@ -42,6 +49,7 @@ int main()
     }
 
     player.destroy();
+    enemy.destroy();
     CloseWindow();
     return 0;
 }
