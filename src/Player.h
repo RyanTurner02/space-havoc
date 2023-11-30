@@ -6,6 +6,7 @@ public:
     Player();
     Model getModel();
     Texture2D getTexture();
+    void updateBoundingBox();
     BoundingBox getBoundingBox();
     Vector3 getPosition();
     void moveLeft();
