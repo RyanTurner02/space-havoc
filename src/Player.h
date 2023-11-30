@@ -6,6 +6,7 @@ public:
     Player();
     Model getModel();
     Texture2D getTexture();
+    BoundingBox getBoundingBox();
     Vector3 getPosition();
     void moveLeft();
     void moveRight();
@@ -15,5 +16,6 @@ public:
 private:
     Model model;
     Texture2D texture;
+    BoundingBox boundingBox;
     Vector3 position;
 };

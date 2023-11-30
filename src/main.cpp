@@ -30,6 +30,7 @@ int main()
 
         BeginMode3D(camera);
         DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
+        DrawBoundingBox(player.getBoundingBox(), LIME);
         DrawGrid(10, 10.0f);
         EndMode3D();
 
