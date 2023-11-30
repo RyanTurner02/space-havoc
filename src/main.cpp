@@ -23,6 +23,10 @@ int main()
     {
         // Update
 
+        // Make the camera follow the player when they move
+        camera.target = (Vector3){player.getPosition().x + 1.7f, 0.0f, 0.0f};
+        camera.position = (Vector3){(player.getPosition().x + 1.7f), camera.position.y, camera.position.z};
+
         // Draw
         BeginDrawing();
         ClearBackground(BLACK);
