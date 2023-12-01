@@ -32,7 +32,7 @@ int main()
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
-    SetTargetFPS(60);
+    // SetTargetFPS(60);
 
     GameScreen currentScreen = TITLE;
     bool isQuittingGame = false;
@@ -137,7 +137,7 @@ void initializeGame() {
 
 void initializeCamera(Camera * camera) {
     *camera = {0};
-    camera->position = (Vector3){0.0f, 4.0f, -20.0f};
+    camera->position = (Vector3){0.0f, 0.0f, 0.0f};
     camera->target = (Vector3){0.0f, 0.0f, 0.0f};
     camera->up = (Vector3){0.0f, 1.0f, 0.0f};
     camera->fovy = 30.0f;
@@ -166,7 +166,7 @@ void handleCamera(Camera * camera, Player * player) {
 
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
-    camera->position = (Vector3){(player->getPosition().x + 1.7f), camera->position.y, camera->position.z};
+    camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
 }
 
 void moveBullets() {

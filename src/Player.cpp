@@ -9,7 +9,7 @@ Player::Player()
     model = LoadModel("objects/player/InterstellarRunner.obj");
     texture = LoadTexture("objects/player/InterstellarRunner.png");
     SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
-    position = {-1.7f, 0.0f, 0.0f};
+    position = {-1.7f, 0.0f, -50.0f};
     boundingBox = GetMeshBoundingBox(model.meshes[0]);
     boundingBox.min = Vector3Add(boundingBox.min, position);
     boundingBox.max = Vector3Add(boundingBox.max, position);
