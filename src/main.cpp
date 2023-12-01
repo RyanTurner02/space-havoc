@@ -23,6 +23,7 @@ int main()
     SetTargetFPS(60);
 
     GameScreen currentScreen = TITLE;
+    bool isQuittingGame = false;
 
     Player player;
     Enemy enemy;
@@ -35,26 +36,25 @@ int main()
     camera.projection = CAMERA_PERSPECTIVE;
 
     while (!WindowShouldClose())
-    {
-        // false indicates we don't quit.
-        // true indicated we want to quit.
-        bool quitGame = false;
-        
+    {        
+        // Update
         switch (currentScreen)
         {
             case TITLE:
             {
                 DrawText("SPACE HAVOC", 500, 150, 40, LIGHTGRAY);
-                
-                if(GuiButton((Rectangle) {300, 450, 100, 50}, "PLAY")){
+
+                if (GuiButton((Rectangle){300, 450, 100, 50}, "PLAY"))
+                {
                     DisableCursor();
                     currentScreen = GAME;
                 }
 
-                if(GuiButton((Rectangle) {870, 450, 100, 50}, "EXIT")){
-                    quitGame = true;
+                if (GuiButton((Rectangle){870, 450, 100, 50}, "QUIT"))
+                {
+                    isQuittingGame = true;
                     break;
-                }       
+                }
             } break;
 
             case GAME:
@@ -67,7 +67,8 @@ int main()
             } break;
         }
 
-        if(quitGame){
+        if (isQuittingGame)
+        {
             break;
         }
 
