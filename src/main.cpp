@@ -115,6 +115,10 @@ int main()
 
                 DrawGrid(10, 10.0f);
 
+                if(CheckCollisionBoxes(player.getBoundingBox(), enemy.getBoundingBox())){
+                    lives--;
+                }
+
                 drawBullets();
 
                 EndMode3D();
