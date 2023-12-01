@@ -39,8 +39,11 @@ int main()
     bool isQuittingGame = false;
 
     Player player;
-    Enemy enemy;
+    Enemy enemy((Vector3) {0.0f, 0.0f, 10.0f});
     enemies.push_back(enemy);
+
+    Enemy enemy2((Vector3) {0.0f, 0.0f, 20.0f});
+    enemies.push_back(enemy2);
 
     Camera camera;
     initializeCamera(&camera);

@@ -3,11 +3,12 @@
 class Enemy
 {
 public:
-    Enemy();
+    Enemy(Vector3 position);
     Model getModel();
     Texture2D getTexture();
     BoundingBox getBoundingBox();
     Vector3 getPosition();
+    void setPosition(Vector3 position);
     float getScale();
     void move();
     void destroy();
