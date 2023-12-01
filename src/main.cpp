@@ -121,7 +121,7 @@ int main()
 
                 drawBullets();
 
-                if(lives <= 0){
+                if(lives <= 0 || score < 0){
                     currentScreen = EXIT;
                 }
 
@@ -230,7 +230,7 @@ void moveBullets() {
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);
 
-                score++;
+                score += 5;
             }
         }
     }
