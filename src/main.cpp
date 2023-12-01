@@ -11,6 +11,8 @@ typedef enum GameScreen
     GAME
 } GameScreen;
 
+void handleInput(Player * player);
+
 int main()
 {
     const int width = 1280;
@@ -57,20 +59,7 @@ int main()
             case GAME:
             {
                 // Update
-                if (IsKeyDown(KEY_LEFT))
-                {
-                    player.moveLeft();
-                }
-
-                if (IsKeyDown(KEY_RIGHT))
-                {
-                    player.moveRight();
-                }
-
-                if (IsKeyPressed(KEY_SPACE))
-                {
-                    player.shoot();
-                }
+                handleInput(&player);
 
                 // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
 
@@ -118,4 +107,21 @@ int main()
     enemy.destroy();
     CloseWindow();
     return 0;
+}
+
+void handleInput(Player * player) {
+    if (IsKeyDown(KEY_LEFT))
+    {
+        player->moveLeft();
+    }
+
+    if (IsKeyDown(KEY_RIGHT))
+    {
+        player->moveRight();
+    }
+
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        player->shoot();
+    }
 }
