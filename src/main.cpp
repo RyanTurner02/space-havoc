@@ -36,7 +36,7 @@ int main()
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
-    // SetTargetFPS(60);
+    SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
 
     GameScreen currentScreen = GAME;
     bool isQuittingGame = false;
