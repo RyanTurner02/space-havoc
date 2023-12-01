@@ -1,4 +1,7 @@
+#define RAYGUI_IMPLEMENTATION
+
 #include "raylib.h"
+#include "raygui.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -15,7 +18,6 @@ int main()
 
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(60);
-    DisableCursor();
 
     GameScreen currentScreen = GAME;
 
@@ -35,10 +37,13 @@ int main()
         {
             case TITLE:
             {
-            }
+                GuiButton((Rectangle) {10, 10, 100, 100}, "Hello World!");
+            } break;
 
             case GAME:
             {
+                DisableCursor();
+
                 // Update
                 if (IsKeyDown(KEY_LEFT))
                 {
@@ -62,7 +67,7 @@ int main()
                 camera.position = (Vector3){(player.getPosition().x + 1.7f), camera.position.y, camera.position.z};
 
                 enemy.move();
-            }
+            } break;
         }
 
         // Draw
@@ -74,7 +79,7 @@ int main()
         {
             case TITLE:
             {
-            }
+            } break;
 
             case GAME:
             {
@@ -87,7 +92,7 @@ int main()
 
                 DrawGrid(10, 10.0f);
                 EndMode3D();
-            }
+            } break;
         }
 
         EndDrawing();
