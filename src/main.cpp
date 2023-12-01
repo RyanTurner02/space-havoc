@@ -21,6 +21,7 @@ void moveBullets();
 void drawBullets();
 
 std::vector<Bullet> bullets;
+std::vector<Enemy> enemies;
 
 int lives = 3;
 int score = 0;
@@ -39,6 +40,7 @@ int main()
 
     Player player;
     Enemy enemy;
+    enemies.push_back(enemy);
 
     Camera camera;
     initializeCamera(&camera);
@@ -79,7 +81,11 @@ int main()
                 handleInput(&player);
                 handleCamera(&camera, &player);
 
-                enemy.move();
+                // move enemies
+                for(int i = 0; i < enemies.size(); i++) {
+                    enemies[i].move();
+                }
+
                 moveBullets();
             } break;
         }
@@ -110,14 +116,23 @@ int main()
                 DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
                 DrawBoundingBox(player.getBoundingBox(), LIME);
 
-                DrawModel(enemy.getModel(), enemy.getPosition(), enemy.getScale(), WHITE);
-                DrawBoundingBox(enemy.getBoundingBox(), LIME);
+                // Draw the enemies
+                for (int i = 0; i < enemies.size(); i++)
+                {
+                    // Draw the current enemy
+                    DrawModel(enemies[i].getModel(), enemies[i].getPosition(), enemies[i].getScale(), WHITE);
+                    DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
+
+                    // Check if the player collides with an enemy
+                    if (CheckCollisionBoxes(player.getBoundingBox(), enemies[i].getBoundingBox()))
+                    {
+                        enemies[i].destroy();
+                        enemies.erase(enemies.begin() + i);
+                        lives--;
+                    }
+                }
 
                 DrawGrid(10, 10.0f);
-
-                if(CheckCollisionBoxes(player.getBoundingBox(), enemy.getBoundingBox())){
-                    lives--;
-                }
 
                 drawBullets();
 
@@ -129,7 +144,7 @@ int main()
     }
 
     player.destroy();
-    enemy.destroy();
+    // enemy.destroy();
     CloseWindow();
     return 0;
 }
