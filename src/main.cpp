@@ -46,6 +46,8 @@ int main()
             float playButtonY = GetScreenHeight() / 2.0 - 70.0 / 2.0;
             float quitButtonY = playButtonY + 70.0 + 20.0;
 
+           GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
+
             if (GuiButton((Rectangle){buttonX, playButtonY, 200, 70}, "PLAY"))
             {
                 DisableCursor();
