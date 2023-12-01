@@ -191,6 +191,16 @@ void handleCamera(Camera * camera, Player * player) {
 void moveBullets() {
     for (int i = 0; i < bullets.size(); i++) {
         bullets[i].move();
+
+        for(int j = 0; j < enemies.size(); j++) {
+            if(CheckCollisionBoxSphere(enemies[j].getBoundingBox(), bullets[i].getPosition(), bullets[i].getRadius())) {
+                enemies[j].destroy();
+                enemies.erase(enemies.begin() + j);
+                bullets.erase(bullets.begin() + i);
+
+                score++;
+            }
+        }
     }
 }
 
