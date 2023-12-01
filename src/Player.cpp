@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#define SPEED 1
+#define SPEED 5
 
 Player::Player()
 {

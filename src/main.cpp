@@ -24,6 +24,17 @@ int main()
     while (!WindowShouldClose())
     {
         // Update
+        if(IsKeyDown(KEY_LEFT)){
+            player.moveLeft();
+        }
+
+        if(IsKeyDown(KEY_RIGHT)){
+            player.moveRight();
+        }
+
+        if(IsKeyPressed(KEY_SPACE)){
+            player.shoot();
+        }
         // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
 
         // Make the camera follow the player when they move
