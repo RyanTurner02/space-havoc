@@ -42,7 +42,9 @@ int main()
             case TITLE:
             {
                 DrawText("SPACE HAVOC", 500, 150, 40, LIGHTGRAY);
+                
                 if(GuiButton((Rectangle) {300, 450, 100, 50}, "PLAY")){
+                    DisableCursor();
                     currentScreen = GAME;
                 }
 
@@ -54,8 +56,6 @@ int main()
 
             case GAME:
             {
-                DisableCursor();
-
                 // Update
                 if (IsKeyDown(KEY_LEFT))
                 {
