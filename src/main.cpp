@@ -19,7 +19,7 @@ int main()
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(60);
 
-    GameScreen currentScreen = GAME;
+    GameScreen currentScreen = TITLE;
 
     Player player;
     Enemy enemy;
@@ -33,11 +33,23 @@ int main()
 
     while (!WindowShouldClose())
     {
+        // false indicates we don't quit.
+        // true indicated we want to quit.
+        bool quitGame = false;
+        
         switch (currentScreen)
         {
             case TITLE:
             {
-                GuiButton((Rectangle) {10, 10, 100, 100}, "Hello World!");
+                DrawText("SPACE HAVOC", 500, 150, 40, LIGHTGRAY);
+                if(GuiButton((Rectangle) {300, 450, 100, 50}, "PLAY")){
+                    currentScreen = GAME;
+                }
+
+                if(GuiButton((Rectangle) {870, 450, 100, 50}, "EXIT")){
+                    quitGame = true;
+                    break;
+                }       
             } break;
 
             case GAME:
@@ -68,6 +80,10 @@ int main()
 
                 enemy.move();
             } break;
+        }
+
+        if(quitGame){
+            break;
         }
 
         // Draw
