@@ -195,6 +195,13 @@ void moveBullets() {
     for (int i = 0; i < bullets.size(); i++) {
         bullets[i].move();
 
+        // Check if the bullet goes beyond the grid
+        if(bullets[i].getPosition().z >= 250.0) {
+            bullets.erase(bullets.begin() + i);
+            continue;
+        }
+
+        // Check for a enemy bullet collision
         for(int j = 0; j < enemies.size(); j++) {
             if(CheckCollisionBoxSphere(enemies[j].getBoundingBox(), bullets[i].getPosition(), bullets[i].getRadius())) {
                 enemies[j].destroy();
