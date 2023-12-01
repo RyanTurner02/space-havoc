@@ -18,6 +18,7 @@ void initializeGame();
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+void moveEnemies();
 void moveBullets();
 void drawBullets();
 
@@ -78,18 +79,11 @@ int main()
                 }
         } break;
 
-
             case GAME:
             {
-                // Update
                 handleInput(&player);
                 handleCamera(&camera, &player);
-
-                // move enemies
-                for(int i = 0; i < enemies.size(); i++) {
-                    enemies[i].move();
-                }
-
+                moveEnemies();
                 moveBullets();
             } break;
         }
@@ -200,6 +194,19 @@ void handleCamera(Camera * camera, Player * player) {
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
     camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
+}
+
+void moveEnemies() {
+    for(int i = 0; i < enemies.size(); i++) {
+        enemies[i].move();
+
+        // Check if the enemy goes behind the player
+        if(enemies[i].getPosition().z <= -60.0f) {
+            enemies.erase(enemies.begin() + i);
+            score--;
+            continue;
+        }
+    }
 }
 
 void moveBullets() {
