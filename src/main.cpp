@@ -18,6 +18,7 @@ void initializeGame();
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+void drawEnemies(Player * player);
 void moveEnemies();
 void moveBullets();
 void drawBullets();
@@ -37,7 +38,7 @@ int main()
     InitWindow(width, height, "Space Havoc");
     // SetTargetFPS(60);
 
-    GameScreen currentScreen = EXIT;
+    GameScreen currentScreen = GAME;
     bool isQuittingGame = false;
 
     Player player;
@@ -114,21 +115,7 @@ int main()
                 DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
                 DrawBoundingBox(player.getBoundingBox(), LIME);
 
-                // Draw the enemies
-                for (int i = 0; i < enemies.size(); i++)
-                {
-                    // Draw the current enemy
-                    DrawModel(enemies[i].getModel(), enemies[i].getPosition(), enemies[i].getScale(), WHITE);
-                    DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
-
-                    // Check if the player collides with an enemy
-                    if (CheckCollisionBoxes(player.getBoundingBox(), enemies[i].getBoundingBox()))
-                    {
-                        enemies[i].destroy();
-                        enemies.erase(enemies.begin() + i);
-                        lives--;
-                    }
-                }
+                drawEnemies(&player);
 
                 DrawGrid(10, 10.0f);
 
@@ -194,6 +181,23 @@ void handleCamera(Camera * camera, Player * player) {
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
     camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
+}
+
+void drawEnemies(Player * player) {
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        // Draw the current enemy
+        DrawModel(enemies[i].getModel(), enemies[i].getPosition(), enemies[i].getScale(), WHITE);
+        DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
+
+        // Check if the player collides with an enemy
+        if (CheckCollisionBoxes(player->getBoundingBox(), enemies[i].getBoundingBox()))
+        {
+            enemies[i].destroy();
+            enemies.erase(enemies.begin() + i);
+            lives--;
+        }
+    }
 }
 
 void moveEnemies() {
