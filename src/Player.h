@@ -10,7 +10,6 @@ public:
     Vector3 getPosition();
     void moveLeft();
     void moveRight();
-    void shoot();
     void destroy();
 
 private:
