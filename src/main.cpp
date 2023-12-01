@@ -12,6 +12,7 @@ typedef enum GameScreen
 } GameScreen;
 
 void handleInput(Player * player);
+void handleCamera(Camera * camera, Player * player);
 
 int main()
 {
@@ -60,12 +61,7 @@ int main()
             {
                 // Update
                 handleInput(&player);
-
-                // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
-
-                // Make the camera follow the player when they move
-                camera.target = (Vector3){player.getPosition().x + 1.7f, 0.0f, 0.0f};
-                camera.position = (Vector3){(player.getPosition().x + 1.7f), camera.position.y, camera.position.z};
+                handleCamera(&camera, &player);
 
                 enemy.move();
             } break;
@@ -124,4 +120,12 @@ void handleInput(Player * player) {
     {
         player->shoot();
     }
+}
+
+void handleCamera(Camera * camera, Player * player) {
+    // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+
+    // Make the camera follow the player when they move
+    camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
+    camera->position = (Vector3){(player->getPosition().x + 1.7f), camera->position.y, camera->position.z};
 }
