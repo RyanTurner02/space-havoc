@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#define SPEED 3
+#define SPEED 30
 
 Enemy::Enemy(Vector3 position)
 {

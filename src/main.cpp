@@ -10,7 +10,8 @@
 typedef enum GameScreen
 {
     TITLE = 0,
-    GAME
+    GAME,
+    EXIT
 } GameScreen;
 
 void initializeGame();
@@ -23,7 +24,7 @@ void drawBullets();
 std::vector<Bullet> bullets;
 std::vector<Enemy> enemies;
 
-int lives = 3;
+int lives = 2;
 int score = 0;
 
 int main()
@@ -35,7 +36,7 @@ int main()
     InitWindow(width, height, "Space Havoc");
     // SetTargetFPS(60);
 
-    GameScreen currentScreen = TITLE;
+    GameScreen currentScreen = EXIT;
     bool isQuittingGame = false;
 
     Player player;
@@ -139,8 +140,18 @@ int main()
 
                 drawBullets();
 
+                if(lives <= 0){
+                    currentScreen = EXIT;
+                }
+
                 EndMode3D();
             } break;
+            case EXIT:
+            {
+                DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("SPACE HAVOC", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
+                DrawText(TextFormat("Previous Score: %d", lives), 10, 35, 20, WHITE);
+                DrawText(TextFormat("Highest Score: %d", lives), 10, 60, 20, WHITE);
+            }
         }
 
         EndDrawing();
