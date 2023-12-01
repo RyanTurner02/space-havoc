@@ -2,6 +2,12 @@
 #include "Player.h"
 #include "Enemy.h"
 
+typedef enum GameScreen
+{
+    TITLE = 0,
+    GAME
+} GameScreen;
+
 int main()
 {
     const int width = 1280;
@@ -10,6 +16,8 @@ int main()
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(60);
     DisableCursor();
+
+    GameScreen currentScreen = GAME;
 
     Player player;
     Enemy enemy;
@@ -23,41 +31,64 @@ int main()
 
     while (!WindowShouldClose())
     {
-        // Update
-        if(IsKeyDown(KEY_LEFT)){
-            player.moveLeft();
+        switch (currentScreen)
+        {
+            case TITLE:
+            {
+            }
+
+            case GAME:
+            {
+                // Update
+                if (IsKeyDown(KEY_LEFT))
+                {
+                    player.moveLeft();
+                }
+
+                if (IsKeyDown(KEY_RIGHT))
+                {
+                    player.moveRight();
+                }
+
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    player.shoot();
+                }
+
+                // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+
+                // Make the camera follow the player when they move
+                camera.target = (Vector3){player.getPosition().x + 1.7f, 0.0f, 0.0f};
+                camera.position = (Vector3){(player.getPosition().x + 1.7f), camera.position.y, camera.position.z};
+
+                enemy.move();
+            }
         }
-
-        if(IsKeyDown(KEY_RIGHT)){
-            player.moveRight();
-        }
-
-        if(IsKeyPressed(KEY_SPACE)){
-            player.shoot();
-        }
-        // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
-
-        // Make the camera follow the player when they move
-        camera.target = (Vector3){player.getPosition().x + 1.7f, 0.0f, 0.0f};
-        camera.position = (Vector3){(player.getPosition().x + 1.7f), camera.position.y, camera.position.z};
-
-
-        enemy.move();
 
         // Draw
         BeginDrawing();
         ClearBackground(BLACK);
         DrawFPS(10, 10);
 
-        BeginMode3D(camera);
-        DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
-        DrawBoundingBox(player.getBoundingBox(), LIME);
+        switch (currentScreen)
+        {
+            case TITLE:
+            {
+            }
 
-        DrawModel(enemy.getModel(), enemy.getPosition(), enemy.getScale(), WHITE);
-        DrawBoundingBox(enemy.getBoundingBox(), LIME);
+            case GAME:
+            {
+                BeginMode3D(camera);
+                DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
+                DrawBoundingBox(player.getBoundingBox(), LIME);
 
-        DrawGrid(10, 10.0f);
-        EndMode3D();
+                DrawModel(enemy.getModel(), enemy.getPosition(), enemy.getScale(), WHITE);
+                DrawBoundingBox(enemy.getBoundingBox(), LIME);
+
+                DrawGrid(10, 10.0f);
+                EndMode3D();
+            }
+        }
 
         EndDrawing();
     }
