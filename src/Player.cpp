@@ -53,11 +53,6 @@ void Player::moveRight()
     boundingBox.max = Vector3Add(boundingBox.max, (Vector3){-deltaX, 0.0f, 0.0f});
 }
 
-void Player::shoot()
-{
-    // TODO
-}
-
 void Player::destroy()
 {
     UnloadTexture(texture);

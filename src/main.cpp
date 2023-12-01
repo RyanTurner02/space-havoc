@@ -3,7 +3,9 @@
 #include "raylib.h"
 #include "raygui.h"
 #include "Player.h"
+#include "Bullet.h"
 #include "Enemy.h"
+#include <vector>
 
 typedef enum GameScreen
 {
@@ -14,6 +16,10 @@ typedef enum GameScreen
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+void moveBullets();
+void drawBullets();
+
+std::vector<Bullet> bullets;
 
 int main()
 {
@@ -62,6 +68,7 @@ int main()
                 handleCamera(&camera, &player);
 
                 enemy.move();
+                moveBullets();
             } break;
         }
 
@@ -91,6 +98,9 @@ int main()
                 DrawBoundingBox(enemy.getBoundingBox(), LIME);
 
                 DrawGrid(10, 10.0f);
+
+                drawBullets();
+
                 EndMode3D();
             } break;
         }
@@ -126,14 +136,26 @@ void handleInput(Player * player) {
 
     if (IsKeyPressed(KEY_SPACE))
     {
-        player->shoot();
+        bullets.push_back(Bullet(player->getPosition()));
     }
 }
 
 void handleCamera(Camera * camera, Player * player) {
-    // UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+    // UpdateCamera(camera, CAMERA_THIRD_PERSON);
 
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
     camera->position = (Vector3){(player->getPosition().x + 1.7f), camera->position.y, camera->position.z};
+}
+
+void moveBullets() {
+    for (int i = 0; i < bullets.size(); i++) {
+        bullets[i].move();
+    }
+}
+
+void drawBullets() {
+    for (int i = 0; i < bullets.size(); i++) {
+        bullets[i].draw();
+    }
 }
