@@ -11,9 +11,13 @@ typedef enum GameScreen
     GAME
 } GameScreen;
 
+void initializeGame();
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+
+int lives = 3;
+int score = 0;
 
 int main()
 {
@@ -39,26 +43,27 @@ int main()
         switch (currentScreen)
         {
             case TITLE:
-        {
-            DrawText("SPACE HAVOC", GetScreenWidth() / 2 - MeasureText("SPACE HAVOC", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
-
-            float buttonX = GetScreenWidth() / 2.0 - 200.0 / 2.0;
-            float playButtonY = GetScreenHeight() / 2.0 - 70.0 / 2.0;
-            float quitButtonY = playButtonY + 70.0 + 20.0;
-
-           GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
-
-            if (GuiButton((Rectangle){buttonX, playButtonY, 200, 70}, "PLAY"))
             {
-                DisableCursor();
-                currentScreen = GAME;
-            }
+                DrawText("SPACE HAVOC", GetScreenWidth() / 2 - MeasureText("SPACE HAVOC", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
 
-            if (GuiButton((Rectangle){buttonX, quitButtonY, 200,70}, "QUIT"))
-            {
-                isQuittingGame = true;
-                break;
-            }
+                float buttonX = GetScreenWidth() / 2.0 - 200.0 / 2.0;
+                float playButtonY = GetScreenHeight() / 2.0 - 70.0 / 2.0;
+                float quitButtonY = playButtonY + 70.0 + 20.0;
+
+                GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
+
+                if (GuiButton((Rectangle){buttonX, playButtonY, 200, 70}, "PLAY"))
+                {
+                    DisableCursor();
+                    initializeGame();
+                    currentScreen = GAME;
+                }
+
+                if (GuiButton((Rectangle){buttonX, quitButtonY, 200,70}, "QUIT"))
+                {
+                    isQuittingGame = true;
+                    break;
+                }
         } break;
 
 
@@ -90,7 +95,11 @@ int main()
 
             case GAME:
             {
+                DrawText(TextFormat("Lives: %d", lives), 10, 35, 20, WHITE);
+                DrawText(TextFormat("Score: %d", score), 10, 60, 20, WHITE);
+
                 BeginMode3D(camera);
+
                 DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
                 DrawBoundingBox(player.getBoundingBox(), LIME);
 
@@ -109,6 +118,11 @@ int main()
     enemy.destroy();
     CloseWindow();
     return 0;
+}
+
+void initializeGame() {
+    lives = 3;
+    score = 0;
 }
 
 void initializeCamera(Camera * camera) {
