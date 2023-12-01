@@ -20,6 +20,7 @@ int main()
     const int width = 1280;
     const int height = 720;
 
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(60);
 
