@@ -39,21 +39,26 @@ int main()
         switch (currentScreen)
         {
             case TITLE:
+        {
+            DrawText("SPACE HAVOC", GetScreenWidth() / 2 - MeasureText("SPACE HAVOC", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
+
+            float buttonX = GetScreenWidth() / 2.0 - 200.0 / 2.0;
+            float playButtonY = GetScreenHeight() / 2.0 - 70.0 / 2.0;
+            float quitButtonY = playButtonY + 70.0 + 20.0;
+
+            if (GuiButton((Rectangle){buttonX, playButtonY, 200, 70}, "PLAY"))
             {
-                DrawText("SPACE HAVOC", 500, 150, 40, LIGHTGRAY);
+                DisableCursor();
+                currentScreen = GAME;
+            }
 
-                if (GuiButton((Rectangle){300, 450, 100, 50}, "PLAY"))
-                {
-                    DisableCursor();
-                    currentScreen = GAME;
-                }
+            if (GuiButton((Rectangle){buttonX, quitButtonY, 200,70}, "QUIT"))
+            {
+                isQuittingGame = true;
+                break;
+            }
+        } break;
 
-                if (GuiButton((Rectangle){870, 450, 100, 50}, "QUIT"))
-                {
-                    isQuittingGame = true;
-                    break;
-                }
-            } break;
 
             case GAME:
             {
