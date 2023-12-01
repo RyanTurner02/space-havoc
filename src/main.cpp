@@ -11,6 +11,7 @@ typedef enum GameScreen
     GAME
 } GameScreen;
 
+void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
 
@@ -28,12 +29,8 @@ int main()
     Player player;
     Enemy enemy;
 
-    Camera camera = {0};
-    camera.position = (Vector3){0.0f, 4.0f, -20.0f};
-    camera.target = (Vector3){0.0f, 0.0f, 0.0f};
-    camera.up = (Vector3){0.0f, 1.0f, 0.0f};
-    camera.fovy = 30.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    Camera camera;
+    initializeCamera(&camera);
 
     while (!WindowShouldClose())
     {        
@@ -104,6 +101,15 @@ int main()
     enemy.destroy();
     CloseWindow();
     return 0;
+}
+
+void initializeCamera(Camera * camera) {
+    *camera = {0};
+    camera->position = (Vector3){0.0f, 4.0f, -20.0f};
+    camera->target = (Vector3){0.0f, 0.0f, 0.0f};
+    camera->up = (Vector3){0.0f, 1.0f, 0.0f};
+    camera->fovy = 30.0f;
+    camera->projection = CAMERA_PERSPECTIVE;
 }
 
 void handleInput(Player * player) {
