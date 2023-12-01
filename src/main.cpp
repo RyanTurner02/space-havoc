@@ -41,6 +41,9 @@ int main()
         camera.target = (Vector3){player.getPosition().x + 1.7f, 0.0f, 0.0f};
         camera.position = (Vector3){(player.getPosition().x + 1.7f), camera.position.y, camera.position.z};
 
+
+        enemy.move();
+
         // Draw
         BeginDrawing();
         ClearBackground(BLACK);

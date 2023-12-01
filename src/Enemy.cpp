@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include "raymath.h"
 
+#define SPEED 3
+
 Enemy::Enemy()
 {
     model = LoadModel("objects/enemy/Alien1/Alien1.obj");
@@ -47,6 +49,11 @@ float Enemy::getScale()
 
 void Enemy::move()
 {
+    float deltaZ = SPEED * GetFrameTime();
+
+    position.z -= deltaZ;
+    boundingBox.min = Vector3Add(boundingBox.min, (Vector3){0.0f, 0.0f, -deltaZ});
+    boundingBox.max = Vector3Add(boundingBox.max, (Vector3){0.0f, 0.0f, -deltaZ});
 }
 
 void Enemy::destroy()
