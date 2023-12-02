@@ -11,6 +11,7 @@
 #include <string>
 
 #define ENEMY_SPAWN_TIME 2.5f
+#define PLAYER_SHOOTING_TIME 0.25f
 
 typedef enum GameScreen
 {
@@ -40,6 +41,7 @@ int lives = 3;
 int score = 0;
 
 float enemySpawnDelay = 0.0f;
+float playerShootingDelay = 0.0f;
 
 int main()
 {
@@ -104,6 +106,7 @@ int main()
 
                 // Update the delays
                 enemySpawnDelay += 1.0f * GetFrameTime();
+                playerShootingDelay += 1.0f * GetFrameTime();
             } break;
         }
 
@@ -197,9 +200,10 @@ void handleInput(Player * player) {
         player->moveRight();
     }
 
-    if (IsKeyPressed(KEY_SPACE))
+    if (IsKeyPressed(KEY_SPACE) && playerShootingDelay >= PLAYER_SHOOTING_TIME)
     {
         bullets.push_back(Bullet(player->getPosition()));
+        playerShootingDelay = 0.0f;
     }
 }
 
