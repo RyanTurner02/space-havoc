@@ -54,7 +54,7 @@ int main()
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
 
-    GameScreen currentScreen = EXIT;
+    GameScreen currentScreen = TITLE;
     bool isQuittingGame = false;
 
     Player player;
@@ -212,8 +212,8 @@ void handleCamera(Camera * camera, Player * player) {
 }
 
 void drawPlayer(Player * player) {
-    DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
-    DrawBoundingBox(player.getBoundingBox(), LIME);
+    DrawModel(player->getModel(), player->getPosition(), 1.0f, WHITE);
+    DrawBoundingBox(player->getBoundingBox(), LIME);
 }
 
 void spawnEnemy() {
