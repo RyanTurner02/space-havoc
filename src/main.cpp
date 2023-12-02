@@ -239,7 +239,7 @@ void drawEnemies(Player * player) {
     for (int i = 0; i < enemies.size(); i++)
     {
         // Draw the current enemy
-        DrawModel(enemies[i].getModel(), enemies[i].getPosition(), enemies[i].getScale(), WHITE);
+        DrawModelEx(enemies[i].getModel(), enemies[i].getPosition(), (Vector3){0.0f, 1.0f, 0.0f}, 180, (Vector3){enemies[i].getScale(), enemies[i].getScale(), enemies[i].getScale()}, WHITE);
         DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
 
         // Check if the player collides with an enemy
