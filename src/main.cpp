@@ -20,6 +20,8 @@ typedef enum GameScreen
     EXIT
 } GameScreen;
 
+void initializeSounds();
+void destroySounds();
 void initializeGame(Player * player);
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
@@ -35,6 +37,7 @@ void drawScore();
 int readHighScoreFile();
 void writeToHighScoreFile();
 
+std::vector<Sound> sounds;
 std::vector<Bullet> bullets;
 std::vector<Enemy> enemies;
 
@@ -54,6 +57,9 @@ int main()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
+    
+    InitAudioDevice();
+    initializeSounds();
 
     GameScreen currentScreen = TITLE;
     bool isQuittingGame = false;
@@ -175,11 +181,29 @@ int main()
         EndDrawing();
     }
 
+    // De-Initialization
     player.destroy();
     enemies.clear();
     bullets.clear();
+    destroySounds();
+
+    CloseAudioDevice();
     CloseWindow();
     return 0;
+}
+
+void initializeSounds() {
+    sounds.push_back(LoadSound("sounds/boom_c_06-102838.mp3"));
+    sounds.push_back(LoadSound("sounds/game-over-arcade-6435.mp3"));
+    sounds.push_back(LoadSound("sounds/retro-falling-down-sfx-85575.mp3"));
+    sounds.push_back(LoadSound("sounds/shoot02wav-14562.mp3"));
+    sounds.push_back(LoadSound("sounds/thump-105302.mp3"));
+}
+
+void destroySounds() {
+    for(int i = 0; i < sounds.size(); i++) {
+        UnloadSound(sounds[i]);
+    }
 }
 
 void initializeGame(Player * player) {
@@ -213,6 +237,7 @@ void handleInput(Player * player) {
     if (IsKeyPressed(KEY_SPACE) && playerShootingDelay >= PLAYER_SHOOTING_TIME)
     {
         bullets.push_back(Bullet(player->getPosition()));
+        PlaySound(sounds[3]);
         playerShootingDelay = 0.0f;
     }
 }
