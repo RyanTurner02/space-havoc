@@ -2,7 +2,7 @@
 #include "Player.h"
 #include <iostream>
 
-#define BULLET_SPEED 25
+#define BULLET_SPEED 300
 
 Bullet::Bullet(Vector3 position)
 {
