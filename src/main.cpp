@@ -57,6 +57,9 @@ int highScore = 0;
 float enemySpawnDelay = 0.0f;
 float playerShootingDelay = 0.0f;
 
+bool isShowingFPS = false;
+float hudOffset = 25.0f;
+
 bool isShowingHitBoxes = false;
 
 int main()
@@ -82,6 +85,12 @@ int main()
     while (!WindowShouldClose())
     {        
         // Update
+
+        // Graphic toggles
+        if(IsKeyPressed(KEY_F)) {
+            isShowingFPS = !isShowingFPS;
+        }
+
         if(IsKeyPressed(KEY_H)) {
             isShowingHitBoxes = !isShowingHitBoxes;
         }
@@ -154,7 +163,13 @@ int main()
         // Draw
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawFPS(10, 10);
+
+        if(isShowingFPS) {
+            DrawFPS(10, 10);
+            hudOffset = 25.0f;
+        } else {
+            hudOffset = 0.0f;
+        }
 
         switch (currentScreen)
         {
@@ -164,8 +179,8 @@ int main()
 
             case GAME:
             {
-                DrawText(TextFormat("Lives: %d", lives), 10, 35, 20, WHITE);
-                DrawText(TextFormat("Score: %d", score), 10, 60, 20, WHITE);
+                DrawText(TextFormat("Lives: %d", lives), 10, 10 + hudOffset, 20, WHITE);
+                DrawText(TextFormat("Score: %d", score), 10, 35 + hudOffset, 20, WHITE);
 
                 BeginMode3D(camera);
                 drawPlayer(&player);
