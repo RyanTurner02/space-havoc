@@ -61,7 +61,6 @@ int main()
 {
     const int width = 1280;
     const int height = 720;
-    // writeToHighScoreFile();
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
@@ -299,7 +298,7 @@ void moveEnemies() {
             enemies.erase(enemies.begin() + i);
             PlaySound(sounds[FALLING_DOWN]);
 
-            score--;
+            lives--;
             continue;
         }
     }
@@ -356,6 +355,7 @@ int readHighScoreFile() {
         highScoreFile.close();
     } else {
         std::cout << "Unable to open file" << std::endl;
+        return -1;
     }
 
     return std::stoi(text);
