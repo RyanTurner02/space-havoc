@@ -3,7 +3,7 @@
 #include "raymath.h"
 
 #define STARTING_POSITION {-1.7f, 0.0f, -50.0f}
-#define SPEED 5
+#define SPEED 15
 
 Player::Player()
 {
