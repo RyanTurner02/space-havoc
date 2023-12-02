@@ -57,6 +57,8 @@ int highScore = 0;
 float enemySpawnDelay = 0.0f;
 float playerShootingDelay = 0.0f;
 
+bool isShowingHitBoxes = false;
+
 int main()
 {
     const int width = 1280;
@@ -80,6 +82,10 @@ int main()
     while (!WindowShouldClose())
     {        
         // Update
+        if(IsKeyPressed(KEY_H)) {
+            isShowingHitBoxes = !isShowingHitBoxes;
+        }
+
         switch (currentScreen)
         {
             case TITLE:
@@ -259,8 +265,10 @@ void handleCamera(Camera * camera, Player * player) {
 }
 
 void drawPlayer(Player * player) {
+    if(isShowingHitBoxes) {
+        DrawBoundingBox(player->getBoundingBox(), LIME);
+    }
     DrawModel(player->getModel(), player->getPosition(), 1.0f, WHITE);
-    DrawBoundingBox(player->getBoundingBox(), LIME);
 }
 
 void spawnEnemy() {
@@ -274,8 +282,11 @@ void drawEnemies(Player * player) {
     for (int i = 0; i < enemies.size(); i++)
     {
         // Draw the current enemy
+        if(isShowingHitBoxes) {
+            DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
+        }
+
         DrawModelEx(enemies[i].getModel(), enemies[i].getPosition(), (Vector3){0.0f, 1.0f, 0.0f}, 180, (Vector3){enemies[i].getScale(), enemies[i].getScale(), enemies[i].getScale()}, WHITE);
-        DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
 
         // Check if the player collides with an enemy
         if (CheckCollisionBoxes(player->getBoundingBox(), enemies[i].getBoundingBox()))
@@ -330,6 +341,9 @@ void moveBullets() {
 
 void drawBullets() {
     for (int i = 0; i < bullets.size(); i++) {
+        if(isShowingHitBoxes) {
+            DrawSphereWires(bullets[i].getPosition(), bullets[i].getRadius(), 15, 15, LIME);
+        }
         bullets[i].draw();
     }
 }
