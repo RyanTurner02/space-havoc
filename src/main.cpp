@@ -24,6 +24,7 @@ void initializeGame();
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+void drawPlayer(Player * player);
 void spawnEnemy();
 void drawEnemies(Player * player);
 void moveEnemies();
@@ -132,14 +133,9 @@ int main()
                 DrawText(TextFormat("Score: %d", score), 10, 60, 20, WHITE);
 
                 BeginMode3D(camera);
-
-                DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
-                DrawBoundingBox(player.getBoundingBox(), LIME);
-
+                drawPlayer(&player);
                 drawEnemies(&player);
-
                 DrawGrid(10, 10.0f);
-
                 drawBullets();
 
                 if(lives <= 0 || score < 0){
@@ -213,6 +209,11 @@ void handleCamera(Camera * camera, Player * player) {
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
     camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
+}
+
+void drawPlayer(Player * player) {
+    DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
+    DrawBoundingBox(player.getBoundingBox(), LIME);
 }
 
 void spawnEnemy() {
