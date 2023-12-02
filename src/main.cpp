@@ -272,41 +272,19 @@ void drawBullets() {
 }
 
 void scoreCheck(){
-    #if 0
-    int a;
-    std::fstream highestScore("highestScore.txt", std::ios_base::in);
+    int highScore = readHighScoreFile();
     DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
     DrawText(TextFormat("SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("SCORE", 40) / 2.25, GetScreenHeight() / 2, 30, WHITE);
 
-    while(highestScore >> a){
-        std::cout << "I got here" << std::endl;
-        if(a <= score)
-        {
-            std::cout << "I got here" << std::endl;
-            DrawText(TextFormat("HIGH SCORE: %d", a),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
-        }
-
-        //If the score is higher than the high score, change that value in the file
-        if(a > score)
-        {
-            highestScore.close(); 
-            std::ofstream highestScoreOut("highestScore.txt", std::ios_base::out);
-
-            if (highestScoreOut.is_open()) {
-                highestScoreOut << score;
-                highestScoreOut.close();
-            }
-
-            DrawText(TextFormat("HIGH SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
-        }
-
+    if(score <= highScore)
+    {
+        DrawText(TextFormat("HIGH SCORE: %d", highScore),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
     }
-    #endif
 
-    int highScore = readHighScoreFile();
-
-    if(score > highScore) {
-        writeToHighScoreFile();
+    if(score > highScore) 
+    {
+        writeToHighScoreFile(); 
+        DrawText(TextFormat("HIGH SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
     }
 }
 
