@@ -306,6 +306,7 @@ void moveBullets() {
                 enemies[j].destroy();
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);
+                PlaySound(sounds[0]);
 
                 score += 5;
             }
