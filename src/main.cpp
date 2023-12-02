@@ -214,6 +214,7 @@ void destroySounds() {
     for(int i = 0; i < sounds.size(); i++) {
         UnloadSound(sounds[i]);
     }
+    sounds.clear();
 }
 
 void initializeGame(Player * player) {
