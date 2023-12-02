@@ -20,7 +20,7 @@ typedef enum GameScreen
     EXIT
 } GameScreen;
 
-void initializeGame();
+void initializeGame(Player * player);
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
@@ -81,7 +81,7 @@ int main()
                 if (GuiButton((Rectangle){buttonX, playButtonY, 200, 70}, "PLAY"))
                 {
                     DisableCursor();
-                    initializeGame();
+                    initializeGame(&player);
                     currentScreen = GAME;
                 }
 
@@ -94,6 +94,15 @@ int main()
 
             case GAME:
             {
+                // Check for game over
+                if (lives <= 0 || score < 0) {
+                    enemies.clear();
+                    bullets.clear();
+                    saveScore();
+                    EnableCursor();
+                    currentScreen = EXIT;
+                }
+
                 handleInput(&player);
                 handleCamera(&camera, &player);
 
@@ -143,12 +152,6 @@ int main()
                 DrawGrid(10, 10.0f);
                 drawBullets();
 
-                if(lives <= 0 || score < 0){
-                    saveScore();
-                    EnableCursor();
-                    currentScreen = EXIT;
-                }
-
                 EndMode3D();
             } break;
 
@@ -173,16 +176,18 @@ int main()
     }
 
     player.destroy();
-    // enemy.destroy();
+    enemies.clear();
+    bullets.clear();
     CloseWindow();
     return 0;
 }
 
-void initializeGame() {
+void initializeGame(Player * player) {
     lives = 3;
     score = 0;
     enemySpawnDelay = 0.0f;
     playerShootingDelay = 0.0f;
+    player->setPosition(player->getStartingPosition());
 }
 
 void initializeCamera(Camera * camera) {

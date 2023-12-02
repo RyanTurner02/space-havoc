@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
+#define STARTING_POSITION {-1.7f, 0.0f, -50.0f}
 #define SPEED 5
 
 Player::Player()
@@ -9,7 +10,7 @@ Player::Player()
     model = LoadModel("objects/player/InterstellarRunner.obj");
     texture = LoadTexture("objects/player/InterstellarRunner.png");
     SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
-    position = {-1.7f, 0.0f, -50.0f};
+    position = STARTING_POSITION;
     boundingBox = GetMeshBoundingBox(model.meshes[0]);
     boundingBox.min = Vector3Add(boundingBox.min, position);
     boundingBox.max = Vector3Add(boundingBox.max, position);
@@ -33,6 +34,19 @@ BoundingBox Player::getBoundingBox()
 Vector3 Player::getPosition()
 {
     return position;
+}
+
+Vector3 Player::getStartingPosition()
+{
+    return STARTING_POSITION;
+}
+
+void Player::setPosition(Vector3 position)
+{
+    this->position = position;
+    boundingBox = GetMeshBoundingBox(model.meshes[0]);
+    boundingBox.min = Vector3Add(boundingBox.min, position);
+    boundingBox.max = Vector3Add(boundingBox.max, position);
 }
 
 void Player::moveLeft()

@@ -8,6 +8,8 @@ public:
     Texture2D getTexture();
     BoundingBox getBoundingBox();
     Vector3 getPosition();
+    Vector3 getStartingPosition();
+    void setPosition(Vector3 position);
     void moveLeft();
     void moveRight();
     void destroy();
