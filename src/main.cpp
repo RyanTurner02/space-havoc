@@ -30,8 +30,8 @@ void drawEnemies(Player * player);
 void moveEnemies();
 void moveBullets();
 void drawBullets();
-void scoreCheck();
-
+void saveScore();
+void drawScore();
 int readHighScoreFile();
 void writeToHighScoreFile();
 
@@ -40,6 +40,7 @@ std::vector<Enemy> enemies;
 
 int lives = 3;
 int score = 0;
+int highScore = 0;
 
 float enemySpawnDelay = 0.0f;
 float playerShootingDelay = 0.0f;
@@ -48,7 +49,7 @@ int main()
 {
     const int width = 1280;
     const int height = 720;
-    writeToHighScoreFile();
+    // writeToHighScoreFile();
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
@@ -109,6 +110,10 @@ int main()
                 enemySpawnDelay += 1.0f * GetFrameTime();
                 playerShootingDelay += 1.0f * GetFrameTime();
             } break;
+
+            case EXIT:
+            {
+            } break;
         }
 
         if (isQuittingGame)
@@ -139,15 +144,17 @@ int main()
                 drawBullets();
 
                 if(lives <= 0 || score < 0){
+                    saveScore();
                     EnableCursor();
                     currentScreen = EXIT;
                 }
 
                 EndMode3D();
             } break;
+
             case EXIT:
             {
-                scoreCheck();
+                drawScore();
 
                 float buttonY = GetScreenHeight() / 2.0 + 100.0 / 2.0;
                 float continueButtonX = GetScreenWidth() / 2.0 - 200.0 / 2.0;
@@ -159,7 +166,7 @@ int main()
                     score = 0;
                     lives = 2;
                 }
-            }
+            } break;
         }
 
         EndDrawing();
@@ -282,21 +289,16 @@ void drawBullets() {
     }
 }
 
-void scoreCheck(){
-    int highScore = readHighScoreFile();
+void saveScore(){
+    highScore = readHighScoreFile();
+    highScore = std::max(score, highScore);
+    writeToHighScoreFile();
+}
+
+void drawScore() {
     DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
     DrawText(TextFormat("SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("SCORE", 40) / 2, GetScreenHeight() / 3, 30, WHITE);
-
-    if(score <= highScore)
-    {
-        DrawText(TextFormat("HIGH SCORE: %d", highScore),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2.25, GetScreenHeight() / 2.55, 30, WHITE);
-    }
-
-    if(score > highScore) 
-    {
-        writeToHighScoreFile(); 
-        DrawText(TextFormat("HIGH SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2.25, GetScreenHeight() / 2.55, 30, WHITE);
-    }
+    DrawText(TextFormat("HIGH SCORE: %d", highScore),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2.25, GetScreenHeight() / 2.55, 30, WHITE);
 }
 
 int readHighScoreFile() {
@@ -318,7 +320,7 @@ void writeToHighScoreFile() {
     std::string text;
 
     if(highScoreFile.is_open()) {
-        highScoreFile << score;
+        highScoreFile << highScore;
         highScoreFile.close();
     } else {
         std::cout << "Unable to open file" << std::endl;
