@@ -21,6 +21,7 @@ void initializeGame();
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+void drawEnemies(Player * player);
 void moveEnemies();
 void moveBullets();
 void drawBullets();
@@ -42,7 +43,7 @@ int main()
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
-    // SetTargetFPS(60);
+    SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
 
     GameScreen currentScreen = TITLE;
     bool isQuittingGame = false;
@@ -130,27 +131,13 @@ int main()
                 DrawModel(player.getModel(), player.getPosition(), 1.0f, WHITE);
                 DrawBoundingBox(player.getBoundingBox(), LIME);
 
-                // Draw the enemies
-                for (int i = 0; i < enemies.size(); i++)
-                {
-                    // Draw the current enemy
-                    DrawModel(enemies[i].getModel(), enemies[i].getPosition(), enemies[i].getScale(), WHITE);
-                    DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
-
-                    // Check if the player collides with an enemy
-                    if (CheckCollisionBoxes(player.getBoundingBox(), enemies[i].getBoundingBox()))
-                    {
-                        enemies[i].destroy();
-                        enemies.erase(enemies.begin() + i);
-                        lives--;
-                    }
-                }
+                drawEnemies(&player);
 
                 DrawGrid(10, 10.0f);
 
                 drawBullets();
 
-                if(lives <= 0){
+                if(lives <= 0 || score < 0){
                     EnableCursor();
                     currentScreen = EXIT;
                 }
@@ -229,6 +216,23 @@ void handleCamera(Camera * camera, Player * player) {
     camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
 }
 
+void drawEnemies(Player * player) {
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        // Draw the current enemy
+        DrawModel(enemies[i].getModel(), enemies[i].getPosition(), enemies[i].getScale(), WHITE);
+        DrawBoundingBox(enemies[i].getBoundingBox(), LIME);
+
+        // Check if the player collides with an enemy
+        if (CheckCollisionBoxes(player->getBoundingBox(), enemies[i].getBoundingBox()))
+        {
+            enemies[i].destroy();
+            enemies.erase(enemies.begin() + i);
+            lives--;
+        }
+    }
+}
+
 void moveEnemies() {
     for(int i = 0; i < enemies.size(); i++) {
         enemies[i].move();
@@ -259,7 +263,7 @@ void moveBullets() {
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);
 
-                score++;
+                score += 5;
             }
         }
     }
