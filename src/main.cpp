@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 typedef enum GameScreen
 {
@@ -24,6 +25,9 @@ void moveEnemies();
 void moveBullets();
 void drawBullets();
 void scoreCheck();
+
+int readHighScoreFile();
+void writeToHighScoreFile();
 
 std::vector<Bullet> bullets;
 std::vector<Enemy> enemies;
@@ -52,6 +56,12 @@ int main()
 
     Enemy enemy3((Vector3) {0.0f, 0.0f, 30.0f});
     enemies.push_back(enemy3);
+
+    Enemy enemy4((Vector3) {0.0f, 0.0f, 40.0f});
+    enemies.push_back(enemy4);
+
+    Enemy enemy5((Vector3) {0.0f, 0.0f, 50.0f});
+    enemies.push_back(enemy5);
 
     Camera camera;
     initializeCamera(&camera);
@@ -262,6 +272,7 @@ void drawBullets() {
 }
 
 void scoreCheck(){
+    #if 0
     int a;
     std::fstream highestScore("highestScore.txt", std::ios_base::in);
     DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
@@ -289,5 +300,39 @@ void scoreCheck(){
             DrawText(TextFormat("HIGH SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
         }
 
+    }
+    #endif
+
+    int highScore = readHighScoreFile();
+
+    if(score > highScore) {
+        writeToHighScoreFile();
+    }
+}
+
+int readHighScoreFile() {
+    std::ifstream highScoreFile("src/highscore.txt");
+    std::string text;
+
+    if (highScoreFile.is_open()) {
+        highScoreFile >> text;
+        std::cout << text << std::endl;
+        highScoreFile.close();
+    } else {
+        std::cout << "Unable to open file" << std::endl;
+    }
+
+    return std::stoi(text);
+}
+
+void writeToHighScoreFile() {
+    std::ofstream highScoreFile("src/highscore.txt");
+    std::string text;
+
+    if(highScoreFile.is_open()) {
+        highScoreFile << score;
+        highScoreFile.close();
+    } else {
+        std::cout << "Unable to open file" << std::endl;
     }
 }
