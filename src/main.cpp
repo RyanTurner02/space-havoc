@@ -287,9 +287,9 @@ void drawPlayer(Player * player) {
 }
 
 void spawnEnemy() {
-    // Spawn the enemies at [-50, 46] on the x-coordinate
-    int offset = -50;
-    float randomNumber = (rand() % 97) + offset;
+    // Spawn the enemies at [48, -48] on the x-coordinate
+    int offset = -48;
+    int randomNumber = (rand() % 97) + offset;
     enemies.push_back(Enemy((Vector3){randomNumber, 0.0f, 40.0f}));
 }
 
