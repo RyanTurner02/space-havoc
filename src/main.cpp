@@ -204,8 +204,6 @@ void handleInput(Player * player) {
 }
 
 void handleCamera(Camera * camera, Player * player) {
-    // UpdateCamera(camera, CAMERA_THIRD_PERSON);
-
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
     camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
@@ -220,7 +218,7 @@ void spawnEnemy() {
     // Spawn the enemies at [-50, 46] on the x-coordinate
     int offset = -50;
     float randomNumber = (rand() % 97) + offset;
-    enemies.push_back(Enemy((Vector3){randomNumber, 0.0f, 0.0f}));
+    enemies.push_back(Enemy((Vector3){randomNumber, 0.0f, 40.0f}));
 }
 
 void drawEnemies(Player * player) {
