@@ -6,6 +6,9 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include <vector>
+#include <fstream>
+#include <iostream>
+#include <string>
 
 typedef enum GameScreen
 {
@@ -22,11 +25,15 @@ void drawEnemies(Player * player);
 void moveEnemies();
 void moveBullets();
 void drawBullets();
+void scoreCheck();
+
+int readHighScoreFile();
+void writeToHighScoreFile();
 
 std::vector<Bullet> bullets;
 std::vector<Enemy> enemies;
 
-int lives = 2;
+int lives = 3;
 int score = 0;
 
 int main()
@@ -38,7 +45,7 @@ int main()
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
 
-    GameScreen currentScreen = GAME;
+    GameScreen currentScreen = TITLE;
     bool isQuittingGame = false;
 
     Player player;
@@ -47,6 +54,15 @@ int main()
 
     Enemy enemy2((Vector3) {0.0f, 0.0f, 20.0f});
     enemies.push_back(enemy2);
+
+    Enemy enemy3((Vector3) {0.0f, 0.0f, 30.0f});
+    enemies.push_back(enemy3);
+
+    Enemy enemy4((Vector3) {0.0f, 0.0f, 40.0f});
+    enemies.push_back(enemy4);
+
+    Enemy enemy5((Vector3) {0.0f, 0.0f, 50.0f});
+    enemies.push_back(enemy5);
 
     Camera camera;
     initializeCamera(&camera);
@@ -122,6 +138,7 @@ int main()
                 drawBullets();
 
                 if(lives <= 0 || score < 0){
+                    EnableCursor();
                     currentScreen = EXIT;
                 }
 
@@ -129,9 +146,25 @@ int main()
             } break;
             case EXIT:
             {
-                DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("SPACE HAVOC", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
-                DrawText(TextFormat("Previous Score: %d", lives), 10, 35, 20, WHITE);
-                DrawText(TextFormat("Highest Score: %d", lives), 10, 60, 20, WHITE);
+                scoreCheck();
+
+                float buttonY = GetScreenHeight() / 2.0 + 300.0 / 2.0;
+                float continueButtonX = GetScreenWidth() / 2.0 - 650.0 / 2.0;
+                float quitButtonX = continueButtonX + 450.0 + 20.0;
+                GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
+
+                if (GuiButton((Rectangle){continueButtonX, buttonY, 200, 70}, "CONTINUE?"))
+                {
+                    currentScreen = TITLE;
+                    score = 0;
+                    lives = 2;
+                }
+
+                if (GuiButton((Rectangle){quitButtonX, buttonY, 200,70}, "QUIT"))
+                {
+                    isQuittingGame = true;
+                    break;
+                }
             }
         }
 
@@ -239,5 +272,49 @@ void moveBullets() {
 void drawBullets() {
     for (int i = 0; i < bullets.size(); i++) {
         bullets[i].draw();
+    }
+}
+
+void scoreCheck(){
+    int highScore = readHighScoreFile();
+    DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, GetScreenHeight() / 4, 40, LIGHTGRAY);
+    DrawText(TextFormat("SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("SCORE", 40) / 2.25, GetScreenHeight() / 2, 30, WHITE);
+
+    if(score <= highScore)
+    {
+        DrawText(TextFormat("HIGH SCORE: %d", highScore),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
+    }
+
+    if(score > highScore) 
+    {
+        writeToHighScoreFile(); 
+        DrawText(TextFormat("HIGH SCORE: %d", score),  GetScreenWidth() / 2 - MeasureText("HIGH SCORE", 40) / 2, GetScreenHeight() / 1.75, 30, WHITE);
+    }
+}
+
+int readHighScoreFile() {
+    std::ifstream highScoreFile("src/highscore.txt");
+    std::string text;
+
+    if (highScoreFile.is_open()) {
+        highScoreFile >> text;
+        std::cout << text << std::endl;
+        highScoreFile.close();
+    } else {
+        std::cout << "Unable to open file" << std::endl;
+    }
+
+    return std::stoi(text);
+}
+
+void writeToHighScoreFile() {
+    std::ofstream highScoreFile("src/highscore.txt");
+    std::string text;
+
+    if(highScoreFile.is_open()) {
+        highScoreFile << score;
+        highScoreFile.close();
+    } else {
+        std::cout << "Unable to open file" << std::endl;
     }
 }
