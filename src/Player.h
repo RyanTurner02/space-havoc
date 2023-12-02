@@ -10,6 +10,8 @@ public:
     Vector3 getPosition();
     Vector3 getStartingPosition();
     void setPosition(Vector3 position);
+    bool getIsSprinting();
+    void setIsSprinting(bool isSprinting);
     void moveLeft();
     void moveRight();
     void destroy();
@@ -19,4 +21,5 @@ private:
     Texture2D texture;
     BoundingBox boundingBox;
     Vector3 position;
+    bool isSprinting;
 };

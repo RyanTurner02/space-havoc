@@ -4,6 +4,7 @@
 
 #define STARTING_POSITION {-1.7f, 0.0f, -50.0f}
 #define SPEED 15
+#define SPRINTING_SPEED 40
 
 Player::Player()
 {
@@ -14,6 +15,7 @@ Player::Player()
     boundingBox = GetMeshBoundingBox(model.meshes[0]);
     boundingBox.min = Vector3Add(boundingBox.min, position);
     boundingBox.max = Vector3Add(boundingBox.max, position);
+    isSprinting = false;
 }
 
 Model Player::getModel()
@@ -49,9 +51,22 @@ void Player::setPosition(Vector3 position)
     boundingBox.max = Vector3Add(boundingBox.max, position);
 }
 
+bool Player::getIsSprinting()
+{
+    return isSprinting;
+}
+
+void Player::setIsSprinting(bool isSprinting) {
+    this->isSprinting = isSprinting;
+}
+
 void Player::moveLeft()
 {
     float deltaX = SPEED * GetFrameTime();
+
+    if(isSprinting) {
+        deltaX = SPRINTING_SPEED * GetFrameTime();
+    }
 
     position.x += deltaX;
     boundingBox.min = Vector3Add(boundingBox.min, (Vector3){deltaX, 0.0f, 0.0f});
@@ -61,6 +76,10 @@ void Player::moveLeft()
 void Player::moveRight()
 {
     float deltaX = SPEED * GetFrameTime();
+
+    if(isSprinting) {
+        deltaX = SPRINTING_SPEED * GetFrameTime();
+    }
 
     position.x -= deltaX;
     boundingBox.min = Vector3Add(boundingBox.min, (Vector3){-deltaX, 0.0f, 0.0f});

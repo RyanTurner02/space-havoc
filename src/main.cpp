@@ -255,6 +255,12 @@ void initializeCamera(Camera * camera) {
 }
 
 void handleInput(Player * player) {
+    if (IsKeyDown(KEY_LEFT_SHIFT) && !player->getIsSprinting()) {
+        player->setIsSprinting(true);
+    } else {
+        player->setIsSprinting(false);
+    }
+
     if (IsKeyDown(KEY_LEFT))
     {
         player->moveLeft();
