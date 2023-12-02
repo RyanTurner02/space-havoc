@@ -13,6 +13,15 @@
 #define ENEMY_SPAWN_TIME 2.5f
 #define PLAYER_SHOOTING_TIME 0.25f
 
+typedef enum Sounds
+{
+    BOOM = 0,
+    GAME_OVER,
+    FALLING_DOWN,
+    SHOOT,
+    THUMP
+} Sounds;
+
 typedef enum GameScreen
 {
     TITLE = 0,
@@ -20,6 +29,8 @@ typedef enum GameScreen
     EXIT
 } GameScreen;
 
+void initializeSounds();
+void destroySounds();
 void initializeGame(Player * player);
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
@@ -35,6 +46,7 @@ void drawScore();
 int readHighScoreFile();
 void writeToHighScoreFile();
 
+std::vector<Sound> sounds;
 std::vector<Bullet> bullets;
 std::vector<Enemy> enemies;
 
@@ -54,6 +66,9 @@ int main()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
+    
+    InitAudioDevice();
+    initializeSounds();
 
     GameScreen currentScreen = TITLE;
     bool isQuittingGame = false;
@@ -100,6 +115,7 @@ int main()
                     bullets.clear();
                     saveScore();
                     EnableCursor();
+                    PlaySound(sounds[GAME_OVER]);
                     currentScreen = EXIT;
                 }
 
@@ -175,11 +191,30 @@ int main()
         EndDrawing();
     }
 
+    // De-Initialization
     player.destroy();
     enemies.clear();
     bullets.clear();
+    destroySounds();
+
+    CloseAudioDevice();
     CloseWindow();
     return 0;
+}
+
+void initializeSounds() {
+    sounds.push_back(LoadSound("sounds/boom_c_06-102838.mp3"));
+    sounds.push_back(LoadSound("sounds/game-over-arcade-6435.mp3"));
+    sounds.push_back(LoadSound("sounds/retro-falling-down-sfx-85575.mp3"));
+    sounds.push_back(LoadSound("sounds/shoot02wav-14562.mp3"));
+    sounds.push_back(LoadSound("sounds/thump-105302.mp3"));
+}
+
+void destroySounds() {
+    for(int i = 0; i < sounds.size(); i++) {
+        UnloadSound(sounds[i]);
+    }
+    sounds.clear();
 }
 
 void initializeGame(Player * player) {
@@ -213,6 +248,7 @@ void handleInput(Player * player) {
     if (IsKeyPressed(KEY_SPACE) && playerShootingDelay >= PLAYER_SHOOTING_TIME)
     {
         bullets.push_back(Bullet(player->getPosition()));
+        PlaySound(sounds[SHOOT]);
         playerShootingDelay = 0.0f;
     }
 }
@@ -247,6 +283,8 @@ void drawEnemies(Player * player) {
         {
             enemies[i].destroy();
             enemies.erase(enemies.begin() + i);
+            PlaySound(sounds[THUMP]);
+
             lives--;
         }
     }
@@ -259,6 +297,8 @@ void moveEnemies() {
         // Check if the enemy goes behind the player
         if(enemies[i].getPosition().z <= -60.0f) {
             enemies.erase(enemies.begin() + i);
+            PlaySound(sounds[FALLING_DOWN]);
+
             score--;
             continue;
         }
@@ -281,6 +321,7 @@ void moveBullets() {
                 enemies[j].destroy();
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);
+                PlaySound(sounds[BOOM]);
 
                 score += 5;
             }
