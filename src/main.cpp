@@ -287,6 +287,8 @@ void moveEnemies() {
         // Check if the enemy goes behind the player
         if(enemies[i].getPosition().z <= -60.0f) {
             enemies.erase(enemies.begin() + i);
+            PlaySound(sounds[2]);
+
             score--;
             continue;
         }
