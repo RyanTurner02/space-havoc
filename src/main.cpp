@@ -85,6 +85,11 @@ int main()
     while (!WindowShouldClose())
     {        
         // Update
+        // Toggle fullscreen
+        if(IsKeyPressed(KEY_F11)) {
+            ToggleFullscreen();
+        }
+
         // Toggle showing FPS in the HUD
         if(IsKeyPressed(KEY_F)) {
             isShowingFPS = !isShowingFPS;
