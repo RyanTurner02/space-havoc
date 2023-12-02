@@ -106,6 +106,7 @@ int main()
                     bullets.clear();
                     saveScore();
                     EnableCursor();
+                    PlaySound(sounds[1]);
                     currentScreen = EXIT;
                 }
 
