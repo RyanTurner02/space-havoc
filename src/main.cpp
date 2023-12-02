@@ -174,6 +174,8 @@ int main()
 void initializeGame() {
     lives = 3;
     score = 0;
+    enemySpawnDelay = 0.0f;
+    playerShootingDelay = 0.0f;
 }
 
 void initializeCamera(Camera * camera) {
