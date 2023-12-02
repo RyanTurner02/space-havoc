@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-#define ENEMY_SPAWN_TIME 2.5f
+#define ENEMY_SPAWN_TIME 1.5f
 #define PLAYER_SHOOTING_TIME 0.25f
 
 typedef enum Sounds
