@@ -342,7 +342,9 @@ void moveBullets() {
 
         // Check for a enemy bullet collision
         for(int j = 0; j < enemies.size(); j++) {
-            if(CheckCollisionBoxSphere(enemies[j].getBoundingBox(), bullets[i].getPosition(), bullets[i].getRadius())) {
+            if (bullets[i].getPosition().x - 1.25f <= enemies[j].getPosition().x && // right-side
+                bullets[i].getPosition().x + 0.85f >= enemies[j].getPosition().x && // left-side
+                bullets[i].getPosition().z >= enemies[j].getPosition().z) {
                 enemies[j].destroy();
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);
