@@ -13,6 +13,15 @@
 #define ENEMY_SPAWN_TIME 2.5f
 #define PLAYER_SHOOTING_TIME 0.25f
 
+typedef enum Sounds
+{
+    BOOM = 0,
+    GAME_OVER,
+    FALLING_DOWN,
+    SHOOT,
+    THUMP
+} Sounds;
+
 typedef enum GameScreen
 {
     TITLE = 0,
@@ -106,7 +115,7 @@ int main()
                     bullets.clear();
                     saveScore();
                     EnableCursor();
-                    PlaySound(sounds[1]);
+                    PlaySound(sounds[GAME_OVER]);
                     currentScreen = EXIT;
                 }
 
@@ -238,7 +247,7 @@ void handleInput(Player * player) {
     if (IsKeyPressed(KEY_SPACE) && playerShootingDelay >= PLAYER_SHOOTING_TIME)
     {
         bullets.push_back(Bullet(player->getPosition()));
-        PlaySound(sounds[3]);
+        PlaySound(sounds[SHOOT]);
         playerShootingDelay = 0.0f;
     }
 }
@@ -273,7 +282,7 @@ void drawEnemies(Player * player) {
         {
             enemies[i].destroy();
             enemies.erase(enemies.begin() + i);
-            PlaySound(sounds[4]);
+            PlaySound(sounds[THUMP]);
 
             lives--;
         }
@@ -287,7 +296,7 @@ void moveEnemies() {
         // Check if the enemy goes behind the player
         if(enemies[i].getPosition().z <= -60.0f) {
             enemies.erase(enemies.begin() + i);
-            PlaySound(sounds[2]);
+            PlaySound(sounds[FALLING_DOWN]);
 
             score--;
             continue;
@@ -311,7 +320,7 @@ void moveBullets() {
                 enemies[j].destroy();
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);
-                PlaySound(sounds[0]);
+                PlaySound(sounds[BOOM]);
 
                 score += 5;
             }
