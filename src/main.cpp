@@ -272,6 +272,8 @@ void drawEnemies(Player * player) {
         {
             enemies[i].destroy();
             enemies.erase(enemies.begin() + i);
+            PlaySound(sounds[4]);
+
             lives--;
         }
     }
