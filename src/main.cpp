@@ -10,6 +10,8 @@
 #include <iostream>
 #include <string>
 
+#define ENEMY_SPAWN_TIME 2.5f
+
 typedef enum GameScreen
 {
     TITLE = 0,
@@ -21,6 +23,7 @@ void initializeGame();
 void initializeCamera(Camera * camera);
 void handleInput(Player * player);
 void handleCamera(Camera * camera, Player * player);
+void spawnEnemy();
 void drawEnemies(Player * player);
 void moveEnemies();
 void moveBullets();
@@ -36,6 +39,8 @@ std::vector<Enemy> enemies;
 int lives = 3;
 int score = 0;
 
+float enemySpawnDelay = 0.0f;
+
 int main()
 {
     const int width = 1280;
@@ -50,20 +55,6 @@ int main()
     bool isQuittingGame = false;
 
     Player player;
-    Enemy enemy((Vector3) {0.0f, 0.0f, 10.0f});
-    enemies.push_back(enemy);
-
-    Enemy enemy2((Vector3) {0.0f, 0.0f, 20.0f});
-    enemies.push_back(enemy2);
-
-    Enemy enemy3((Vector3) {0.0f, 0.0f, 30.0f});
-    enemies.push_back(enemy3);
-
-    Enemy enemy4((Vector3) {0.0f, 0.0f, 40.0f});
-    enemies.push_back(enemy4);
-
-    Enemy enemy5((Vector3) {0.0f, 0.0f, 50.0f});
-    enemies.push_back(enemy5);
 
     Camera camera;
     initializeCamera(&camera);
@@ -101,8 +92,18 @@ int main()
             {
                 handleInput(&player);
                 handleCamera(&camera, &player);
+
+                // Spawn the enemies after the delay
+                if(enemySpawnDelay >= ENEMY_SPAWN_TIME) {
+                    spawnEnemy();
+                    enemySpawnDelay = 0.0f;
+                }
+
                 moveEnemies();
                 moveBullets();
+
+                // Update the delays
+                enemySpawnDelay += 1.0f * GetFrameTime();
             } break;
         }
 
@@ -208,6 +209,13 @@ void handleCamera(Camera * camera, Player * player) {
     // Make the camera follow the player when they move
     camera->target = (Vector3){player->getPosition().x + 1.7f, 0.0f, 0.0f};
     camera->position = (Vector3){(player->getPosition().x + 1.7f), 4.0f, player->getPosition().z - 20.0f};
+}
+
+void spawnEnemy() {
+    // Spawn the enemies at [-50, 46] on the x-coordinate
+    int offset = -50;
+    float randomNumber = (rand() % 97) + offset;
+    enemies.push_back(Enemy((Vector3){randomNumber, 0.0f, 0.0f}));
 }
 
 void drawEnemies(Player * player) {
