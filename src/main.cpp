@@ -85,12 +85,12 @@ int main()
     while (!WindowShouldClose())
     {        
         // Update
-
-        // Graphic toggles
+        // Toggle showing FPS in the HUD
         if(IsKeyPressed(KEY_F)) {
             isShowingFPS = !isShowingFPS;
         }
 
+        // Toggle showing bounding boxes
         if(IsKeyPressed(KEY_H)) {
             isShowingHitBoxes = !isShowingHitBoxes;
         }
