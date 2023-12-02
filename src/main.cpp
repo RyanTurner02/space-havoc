@@ -335,7 +335,7 @@ void moveBullets() {
         bullets[i].move();
 
         // Check if the bullet goes beyond the grid
-        if(bullets[i].getPosition().z >= 250.0) {
+        if(bullets[i].getPosition().z >= 600.0f) {
             bullets.erase(bullets.begin() + i);
             continue;
         }
