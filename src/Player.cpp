@@ -60,13 +60,20 @@ void Player::setIsSprinting(bool isSprinting) {
     this->isSprinting = isSprinting;
 }
 
-void Player::moveLeft()
+float Player::getDeltaX()
 {
     float deltaX = SPEED * GetFrameTime();
 
     if(isSprinting) {
         deltaX = SPRINTING_SPEED * GetFrameTime();
     }
+
+    return deltaX;
+}
+
+void Player::moveLeft()
+{
+    float deltaX = getDeltaX();
 
     position.x += deltaX;
     boundingBox.min = Vector3Add(boundingBox.min, (Vector3){deltaX, 0.0f, 0.0f});
@@ -75,11 +82,7 @@ void Player::moveLeft()
 
 void Player::moveRight()
 {
-    float deltaX = SPEED * GetFrameTime();
-
-    if(isSprinting) {
-        deltaX = SPRINTING_SPEED * GetFrameTime();
-    }
+    float deltaX = getDeltaX();
 
     position.x -= deltaX;
     boundingBox.min = Vector3Add(boundingBox.min, (Vector3){-deltaX, 0.0f, 0.0f});

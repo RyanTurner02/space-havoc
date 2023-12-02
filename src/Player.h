@@ -17,6 +17,7 @@ public:
     void destroy();
 
 private:
+    float getDeltaX();
     Model model;
     Texture2D texture;
     BoundingBox boundingBox;
