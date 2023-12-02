@@ -10,6 +10,8 @@
 #include <iostream>
 #include <string>
 
+#define ENEMY_SPAWN_TIME 2.5f
+
 typedef enum GameScreen
 {
     TITLE = 0,
@@ -36,6 +38,8 @@ std::vector<Enemy> enemies;
 
 int lives = 3;
 int score = 0;
+
+float enemySpawnDelay = 0.0f;
 
 int main()
 {
@@ -87,9 +91,18 @@ int main()
             {
                 handleInput(&player);
                 handleCamera(&camera, &player);
-                spawnEnemy();
+
+                // Spawn the enemies after the delay
+                if(enemySpawnDelay >= ENEMY_SPAWN_TIME) {
+                    spawnEnemy();
+                    enemySpawnDelay = 0.0f;
+                }
+
                 moveEnemies();
                 moveBullets();
+
+                // Update the delays
+                enemySpawnDelay += 1.0f * GetFrameTime();
             } break;
         }
 
