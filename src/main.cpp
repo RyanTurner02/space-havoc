@@ -355,20 +355,10 @@ void moveBullets() {
         for(int j = 0; j < enemies.size(); j++) {
             bool hasCollided = false;
 
-            if(enemies[j].getType() == 1 || enemies[j].getType() == 3) {
-                if (bullets[i].getPosition().x - 1.25f <= enemies[j].getPosition().x - 0.1f && // right-side
-                    bullets[i].getPosition().x + 0.85f >= enemies[j].getPosition().x - 0.1f && // left-side
-                    bullets[i].getPosition().z >= enemies[j].getPosition().z) {
+            if (bullets[i].getPosition().x <= enemies[j].getBoundingBox().max.x &&
+                bullets[i].getPosition().x >= enemies[j].getBoundingBox().min.x &&
+                bullets[i].getPosition().z >= enemies[j].getPosition().z) {
                     hasCollided = true;
-                }
-            }
-            
-            if(enemies[j].getType() == 2 || enemies[j].getType() == 4) {
-                if (bullets[i].getPosition().x - 1.25f <= enemies[j].getPosition().x && // right-side
-                    bullets[i].getPosition().x + 0.85f >= enemies[j].getPosition().x && // left-side
-                    bullets[i].getPosition().z >= enemies[j].getPosition().z) {
-                    hasCollided = true;
-                }
             }
 
             if(hasCollided) {
