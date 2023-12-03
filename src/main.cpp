@@ -86,7 +86,7 @@ int main()
     {        
         // Update
         // Toggle fullscreen
-        if(IsKeyPressed(KEY_F11)) {
+        if(IsKeyPressed(KEY_F10)) {
             ToggleFullscreen();
         }
 
