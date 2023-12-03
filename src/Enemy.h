@@ -10,6 +10,7 @@ public:
     Vector3 getPosition();
     void setPosition(Vector3 position);
     float getScale();
+    int getType();
     void move();
     void destroy();
 
@@ -19,4 +20,5 @@ private:
     BoundingBox boundingBox;
     Vector3 position;
     float scale;
+    int type;
 };

@@ -353,9 +353,25 @@ void moveBullets() {
 
         // Check for a enemy bullet collision
         for(int j = 0; j < enemies.size(); j++) {
-            if (bullets[i].getPosition().x - 1.25f <= enemies[j].getPosition().x && // right-side
-                bullets[i].getPosition().x + 0.85f >= enemies[j].getPosition().x && // left-side
-                bullets[i].getPosition().z >= enemies[j].getPosition().z) {
+            bool hasCollided = false;
+
+            if(enemies[j].getType() == 1 || enemies[j].getType() == 3) {
+                if (bullets[i].getPosition().x - 1.25f <= enemies[j].getPosition().x - 0.1f && // right-side
+                    bullets[i].getPosition().x + 0.85f >= enemies[j].getPosition().x - 0.1f && // left-side
+                    bullets[i].getPosition().z >= enemies[j].getPosition().z) {
+                    hasCollided = true;
+                }
+            }
+            
+            if(enemies[j].getType() == 2 || enemies[j].getType() == 4) {
+                if (bullets[i].getPosition().x - 1.25f <= enemies[j].getPosition().x && // right-side
+                    bullets[i].getPosition().x + 0.85f >= enemies[j].getPosition().x && // left-side
+                    bullets[i].getPosition().z >= enemies[j].getPosition().z) {
+                    hasCollided = true;
+                }
+            }
+
+            if(hasCollided) {
                 enemies[j].destroy();
                 enemies.erase(enemies.begin() + j);
                 bullets.erase(bullets.begin() + i);

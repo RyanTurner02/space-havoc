@@ -41,6 +41,7 @@ Enemy::Enemy(Vector3 position)
     this->position = position;
     boundingBox = GetMeshBoundingBox(model.meshes[0]);
     scale = 0.25f;
+    type = randomNumber;
 
     // scale the bounding box
     boundingBox.min = Vector3Scale(boundingBox.min, scale);
@@ -89,6 +90,10 @@ void Enemy::setPosition(Vector3 position) {
 float Enemy::getScale()
 {
     return scale;
+}
+
+int Enemy::getType() {
+    return type;
 }
 
 void Enemy::move()
