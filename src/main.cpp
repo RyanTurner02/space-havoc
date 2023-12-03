@@ -395,7 +395,7 @@ void drawScore() {
 }
 
 int readHighScoreFile() {
-    std::ifstream highScoreFile("src/highscore.txt");
+    std::ifstream highScoreFile("highscore.txt");
     std::string text;
 
     if (highScoreFile.is_open()) {
@@ -410,7 +410,7 @@ int readHighScoreFile() {
 }
 
 void writeToHighScoreFile() {
-    std::ofstream highScoreFile("src/highscore.txt");
+    std::ofstream highScoreFile("highscore.txt");
     std::string text;
 
     if(highScoreFile.is_open()) {
