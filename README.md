@@ -6,9 +6,9 @@ The goal is to survive an endless wave of aliens by shooting them to stop them f
 
 ## Controls
 
-* `Left Arrow`: Make the player move left
+* `Left Arrow`: Move Left
 
-* `Right Arrow`: Make the player move right
+* `Right Arrow`: Move Right
 
 * `Space`: Shoot
 
