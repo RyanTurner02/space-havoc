@@ -4,6 +4,8 @@ Space Havoc is a 3D Space Shooter inspired by old Atari and arcade games made wi
 
 The goal is to survive an endless wave of aliens by shooting them to stop them from reaching the end of the map.
 
+<img src="screenshots/space-havoc-1.gif" width=700 height=auto />
+
 ## Controls
 
 * `Left Arrow`: Move Left
