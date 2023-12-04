@@ -32,7 +32,7 @@ Download the game from the [Releases](https://github.com/RyanTurner02/space-havo
 
 ## Credits
 
-* [Ryan Turner](https://github.com/RyanTurner02): Programming and Game Design
+* [Ryan Turner](https://github.com/RyanTurner02): Programming, Game Design, and Icon
 
 * [Nathan Justin](https://github.com/SkyDrqgon): Programming and Game Design
 
