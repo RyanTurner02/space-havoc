@@ -22,6 +22,8 @@ The goal is to survive an endless wave of aliens by shooting them to stop them f
 
 ## Usage
 
+Download the game from the [Releases](https://github.com/RyanTurner02/space-havoc/releases) page and run the executable.
+
 ## Credits
 
 * [Ryan Turner](https://github.com/RyanTurner02): Programming and Game Design
