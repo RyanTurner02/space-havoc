@@ -1,29 +1,43 @@
-# Raylib-CPP-Starter-Template-for-VSCODE-V2
-Raylib C++ Starter Template for Visual Studio Code on Windows.
-This demo project contains a bouncing ball raylib example program.
-It works with raylib version 4.5. Tested on both Windows 10 and Windows 11.
+# Space Havoc
 
-# How to use this template
-1. Double click on the main.code-workspace file. This will open the template in VS Code.
-2. From the Explorer Window of VS Code navigate to the src folder and double click on the main.cpp file.
-3. Press F5 on the keyboard to compile and run the program.
+Space Havoc is a 3D Space Shooter inspired by old Atari and arcade games made with C++, [raylib](https://www.raylib.com/), and [raygui](https://github.com/raysan5/raygui).
 
-# What's changed
-The template now uses folders for better organizion of the files. So, all the source code now lives in the src folder.
+The goal is to survive an endless wave of aliens by shooting them to stop them from reaching the end of the map.
 
-# Video Tutorial
+<div align="center">
+    <img src="screenshots/space-havoc-1.gif" width=700 height=auto />
+</div>
 
-<p align="center">
-  <img src="preview.jpg" alt="" width="800">
-</p>
+## Controls
 
-<p align="center">
-🎥 <a href="https://www.youtube.com/watch?v=PaAcVk5jUd8">Video Tutorial on YouTube</a>
-</p>
+* `Left Arrow`: Move Left
 
-<br>
-<br>
-<p align="center">
-| 📺 <a href="https://www.youtube.com/channel/UC3ivOTE5EgpmF2DHLBmWIWg">My YouTube Channel</a>
-| 🌍 <a href="http://www.educ8s.tv">My Website</a> | <br>
-</p>
+* `Right Arrow`: Move Right
+
+* `Space`: Shoot
+
+* `Left Shift`: Sprint
+
+* `ESC`: Quit the game
+
+* `F10`: Toggle fullscreen mode
+
+* `F`: Toggle FPS display in the HUD
+
+* `H`: Toggle displaying collision boxes of the player, bullets, and enemies
+
+## Usage
+
+Download the game from the [Releases](https://github.com/RyanTurner02/space-havoc/releases) page and run the executable.
+
+## Credits
+
+* [Ryan Turner](https://github.com/RyanTurner02): Programming and Game Design
+
+* [Nathan Justin](https://github.com/SkyDrqgon): Programming and Game Design
+
+* Max Parata: [Interstellar Runner Voxel Spaceship](https://maxparata.itch.io/voxel-spaceships)
+
+* AlienDev: [Alien Voxel Characters](https://aliendev.itch.io/alien-voxel-characters)
+
+* Sounds from [Pixabay](https://pixabay.com/)
