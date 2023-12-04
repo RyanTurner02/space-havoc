@@ -14,6 +14,8 @@ The goal is to survive an endless wave of aliens by shooting them to stop them f
 
 * `Left Shift`: Sprint
 
+* `ESC`: Quit the game
+
 * `F10`: Toggle fullscreen mode
 
 * `F`: Toggle FPS display in the HUD
