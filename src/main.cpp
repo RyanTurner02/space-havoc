@@ -70,7 +70,10 @@ int main()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "Space Havoc");
     SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor())); // Set the FPS to the current monitor's refresh rate
-    
+
+    Image icon = LoadImage("img/icon.png");
+    SetWindowIcon(icon);
+
     InitAudioDevice();
     initializeSounds();
 
@@ -222,6 +225,7 @@ int main()
     bullets.clear();
     destroySounds();
 
+    UnloadImage(icon);
     CloseAudioDevice();
     CloseWindow();
     return 0;
