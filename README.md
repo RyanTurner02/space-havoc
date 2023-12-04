@@ -24,9 +24,9 @@ The goal is to survive an endless wave of aliens by shooting them to stop them f
 
 ## Credits
 
-* [Ryan Turner](https://github.com/RyanTurner02): Programming
+* [Ryan Turner](https://github.com/RyanTurner02): Programming and Game Design
 
-* [Nathan Justin](https://github.com/SkyDrqgon): Programming
+* [Nathan Justin](https://github.com/SkyDrqgon): Programming and Game Design
 
 * Max Parata: [Interstellar Runner Voxel Spaceship](https://maxparata.itch.io/voxel-spaceships)
 
